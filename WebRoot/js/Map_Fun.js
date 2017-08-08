@@ -34,23 +34,6 @@ function addClusters(resp) {
         };
       });
     
-    // popupTemplate to work with attributes specific to this dataset
-    var popupTemplate = new esri.dijit.PopupTemplate({
-      "title": "",
-      "fieldInfos": [{
-        "fieldName": "Caption",
-        visible: true
-      }, {
-        "fieldName": "Name",
-        "label": "By",
-        visible: true
-      }, {
-        "fieldName": "Link",
-        "label": "On Instagram",
-        visible: true
-      }]
-    });
-    
     dojo.require("extras.ClusterLayer");
 
     clusterLayer = new extras.ClusterLayer({
