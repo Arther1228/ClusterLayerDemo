@@ -61,7 +61,9 @@ function init() {
 		center: [-117.789, 33.543],
 		zoom: 13
 	});
-
+	map.disableDoubleClickZoom();
+	map.isDoubleClickZoom = true;
+	
 	map.on("click", cleanUp);
 
 	map.on("key-down", function(e) {
