@@ -55,7 +55,7 @@ define([
       this._showSingles = options.hasOwnProperty("showSingles") ? options.showSingles : true;
       // symbol for single graphics
       var SMS = SimpleMarkerSymbol;
-      this._singleSym = options.singleSymbol || new SMS("circle", 6, null, new Color("#888"));
+      this._singleSym = options.singleSymbol || highlightSymbol1;
       this._singleTemplate = options.singleTemplate || new PopupTemplate({ "title": "", "description": "{*}" });
       this._maxSingles = options.maxSingles || 1000;
 
@@ -64,6 +64,17 @@ define([
       this._sr = options.spatialReference || new SpatialReference({ "wkid": 102100 });
 
       this._zoomEnd = null;
+      
+      this._mouseDownEvent = null;   //右击
+      
+      this._mouseClickEvent = null;   //单击
+      
+      this._mouseDoubleclickEvent = null;  //双击
+      
+      this._timer = null;
+      
+      this._clickStatus = 1;
+      
     },
 
     // override esri/layers/GraphicsLayer methods 
@@ -78,6 +89,7 @@ define([
         this._clusterResolution = this._map.extent.getWidth() / this._map.width;
         this.clear();
         this._clusterGraphics();
+        this._map.infoWindow.hide();
       });
 
       // GraphicsLayer will add its own listener here
@@ -141,7 +153,7 @@ define([
       this._singles.length = 0;
     },
 
-    onClick: function(e) {
+/*    onClick: function(e) {
       // remove any previously showing single features
       this.clearSingles(this._singles);
 
@@ -162,7 +174,7 @@ define([
         this._map.infoWindow.show(e.graphic.geometry);
         this._addSingles(singles);
       }
-    },
+    },*/
 
     // internal methods 
     _clusterGraphics: function() {
@@ -186,6 +198,29 @@ define([
         }
       }
       this._showAllClusters();
+      
+      
+      this._mouseDownEvent = connect.connect(this, "onMouseDown", function(evt1) {
+    	  if(evt1.button === 2){
+    		  console.log("右击evt1.button: " + evt1.button + ", you click at clusterId: " + evt1.graphic.attributes.clusterId);
+    	  }
+     });
+      
+      this._mouseClickEvent = connect.connect(this, "onClick", function(evt2) {
+    	  this._clickStatus = 1;
+          this._timer = setTimeout(function() {
+        	  //这里的this的作用域与上面的this不一样
+              if (window.clusterLayer._clickStatus === 1) {
+            	  console.log("单击evt2.button: " + evt2.button + ", you click at clusterId: " + evt2.graphic.attributes.clusterId);
+              }
+          }, 500);
+      });
+
+	  this._mouseDoubleclickEvent = connect.connect(this, "onDblClick",function(evt3) {
+		  clearTimeout(this._timer);
+		  this._clickStatus = 0;
+		  console.log("双击evt3.button: " + evt3.button + ", you click at clusterId: " + evt3.graphic.attributes.clusterId);
+	  });
     },
 
     _clusterTest: function(p, cluster) {

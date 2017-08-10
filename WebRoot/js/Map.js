@@ -15,6 +15,9 @@ var red = null;
 //var popupOptions = null;
 var popupTemplate = null;
 
+var highlightSymbol1 = "";
+var path = "";
+
 require(["dojo/parser", "dojo/ready", "dojo/_base/array", "esri/Color", "dojo/dom-style", "dojo/query", "esri/map"
          , "esri/request", "esri/graphic", "esri/geometry/Extent", "esri/symbols/SimpleMarkerSymbol"
          , "esri/symbols/SimpleFillSymbol", "esri/symbols/PictureMarkerSymbol", "esri/renderers/ClassBreaksRenderer"
@@ -33,6 +36,14 @@ function init() {
 	green = new esri.symbol.PictureMarkerSymbol(picBaseUrl + "GreenPin1LargeB.png", 64, 64).setOffset(0, 15);
 	red = new esri.symbol.PictureMarkerSymbol(picBaseUrl + "RedPin1LargeB.png", 72, 72).setOffset(0, 15);
 
+	
+	var whpath = window.document.location.href;
+    var filename = "index.html";
+    var pos = whpath.indexOf(filename);
+    path = whpath.substring(0, pos);
+    highlightSymbol1 = new esri.symbol.PictureMarkerSymbol(path + "/images/qiujiNew.png", 12, 12);
+    highlightSymbol0 = new esri.symbol.PictureMarkerSymbol(path + "/images/qiangjiNew.png", 12, 12);
+    
 /*	popupOptions = {
 			"markerSymbol": new esri.symbol.SimpleMarkerSymbol("circle", 20, null, new esri.Color([0, 0, 0, 0.25])),
 			"marginLeft": "20",
