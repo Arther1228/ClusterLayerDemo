@@ -32,9 +32,9 @@ function init() {
 	renderer = new esri.renderer.ClassBreaksRenderer(defaultSym, "clusterCount");
 
 	picBaseUrl = "https://static.arcgis.com/images/Symbols/Shapes/";
-	blue = new esri.symbol.PictureMarkerSymbol(picBaseUrl + "BluePin1LargeB.png", 64, 64).setOffset(0, 15);
+	blue = new esri.symbol.PictureMarkerSymbol(picBaseUrl + "BluePin1LargeB.png", 32, 32).setOffset(0, 15);
 	green = new esri.symbol.PictureMarkerSymbol(picBaseUrl + "GreenPin1LargeB.png", 64, 64).setOffset(0, 15);
-	red = new esri.symbol.PictureMarkerSymbol(picBaseUrl + "RedPin1LargeB.png", 64, 64).setOffset(0, 15);
+	red = new esri.symbol.PictureMarkerSymbol(picBaseUrl + "RedPin1LargeB.png", 72, 72).setOffset(0, 15);
 
 	
 	var whpath = window.document.location.href;
